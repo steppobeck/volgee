@@ -1,0 +1,54 @@
+SRCDIR = ./
+BINDIR = ../bin
+CXX = c++
+CXXFLAGS = -fPIC -DOSX -I. -I/opt/local/include/ -I/Library/Frameworks/SDL2.framework/Headers -I/Library/Frameworks/SDL2_image.framework/Headers -Wall -Os -O3 -O -O1 -fexpensive-optimizations
+LDDFLAGS =  -lGLEW -framework GLUT -framework OpenGL -framework SDL2 -framework SDL2_image
+
+
+WDIR := $(shell cd . ; pwd)
+PARENTDIR := $(shell cd .. ; pwd)
+
+
+TARGETNAME = volgee
+TARGET := $(BINDIR)/$(TARGETNAME)
+
+
+SOURCES = $(wildcard $(SRCDIR)*.cpp)
+OBJECTS = $(patsubst $(SRCDIR)%.cpp, %.o, $(SOURCES))
+HEADERS = $(wildcard $(SRCDIR)*.h)
+
+
+
+default: Makefile $(TARGET)
+	@echo built $(TARGET)
+
+
+
+$(TARGET): $(OBJECTS) $(HEADERS) Makefile
+	$(CXX) $(OBJECTS) $(LIBS) $(LDDFLAGS) -o $@
+
+%.o: $(SRCDIR)%.cpp
+	$(CXX) -c $< $(CXXFLAGS)
+
+
+
+
+clean:
+	@rm -f $(OBJECTS)
+	@echo cleaned
+
+realclean: clean
+	@rm -f $(TARGET) *~
+
+
+realclean: clean
+	@rm -f $(TARGET) *~
+	@echo realcleaned
+
+cleandefault: clean
+cleanDebug: clean
+Debug: default
+Release: default
+
+
+

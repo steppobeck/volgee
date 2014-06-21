@@ -1,0 +1,17 @@
+
+SVN ignore files and folders tips:
+
+To ignore multiple types of files and folders, you must have a newline delimited list of values for the svn propset command. Because this can not be done with the commandline (well, I do not know how to do it anyway), we create a text file with on each line the signature of a file and/or folder to ignore.
+For example, we have a textfile with following content:
+
+obj
+bin
+
+We save this file in the target folder and name it “ignore.txt”, and then issue the command in the target folder
+
+[TargetFolder]>svn propset svn:ignore -F ignore.txt .
+
+
+Again, do not forget the final dot, it means that the target folder is the current folder. With the above command all folders with names obj and bin in the target folder will be ignored by Subversion.
+
+
